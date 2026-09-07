@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LexOS // Memory Mirror — ChatGPT Archive & Thought Archaeology</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090214;
+      --bg-gradient: radial-gradient(circle at 50% 10%, #2b0e4a 0%, #150628 45%, #070110 100%);
+      --surface-card: rgba(26, 12, 44, 0.78);
+      --surface-glass: rgba(255, 255, 255, 0.07);
+      --surface-border: rgba(255, 255, 255, 0.14);
+      --surface-border-active: rgba(216, 180, 254, 0.5);
+      --text-main: #f5f3ff;
+      --text-muted: #c4b5fd;
+      --text-dim: #8b5cf6;
+      --accent: #d946ef;
+      --accent-gold: #fbbf24;
+      --accent-glow: rgba(217, 70, 239, 0.35);
+      --accent-cyan: #38bdf8;
+      --font-display: 'Cinzel', serif;
+      --font-sans: 'Outfit', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Nav */
+    header {
+      width: 100%;
+      background: rgba(15, 5, 28, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--surface-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.9rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      letter-spacing: 0.12em;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .brand .logo-icon {
+      font-size: 1.6rem;
+      filter: drop-shadow(0 0 10px var(--accent-glow));
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .btn-pill {
+      background: var(--surface-glass);
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      padding: 0.5rem 1.1rem;
+      border-radius: 999px;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .btn-pill:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: var(--accent-gold);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, #9333ea 100%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 6px 22px var(--accent-glow);
+    }
+
+    /* Main Grid Layout */
+    .app-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      height: calc(100vh - 65px);
+      overflow: hidden;
+    }
+
+    /* Left Sidebar: Threads & Search */
+    .sidebar {
+      background: rgba(12, 4, 22, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-right: 1px solid var(--surface-border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .search-box-container {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input-wrap input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 0.75rem 1rem 0.75rem 2.6rem;
+      color: #ffffff;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input-wrap input:focus {
+      border-color: var(--accent-gold);
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 16px rgba(251, 191, 36, 0.25);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.9rem;
+      font-size: 1rem;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Filter Pills */
+    .filter-scroll {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .filter-scroll::-webkit-scrollbar { height: 4px; }
+    .filter-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 2px; }
+
+    .tag-filter {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tag-filter:hover, .tag-filter.active {
+      background: var(--accent-gold);
+      color: #090214;
+      font-weight: 600;
+      border-color: var(--accent-gold);
+    }
+
+    /* Thread List */
+    .thread-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .thread-list::-webkit-scrollbar { width: 6px; }
+    .thread-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
+
+    .thread-card {
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .thread-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--surface-border);
+      transform: translateX(3px);
+    }
+
+    .thread-card.active {
+      background: rgba(217, 70, 239, 0.18);
+      border-color: var(--accent);
+      box-shadow: 0 4px 16px rgba(217, 70, 239, 0.2);
+    }
+
+    .thread-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #ffffff;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .thread-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .thread-badge {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+    }
+
+    /* Right Main Area: Reader & Hero */
+    .reader-arena {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: rgba(18, 6, 32, 0.4);
+      position: relative;
+    }
+
+    /* Drop Zone Hero (When no file loaded or on start) */
+    .drop-hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem;
+      text-align: center;
+      gap: 1.5rem;
+      position: relative;
+    }
+
+    .drop-box {
+      border: 2px dashed rgba(216, 180, 254, 0.4);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      max-width: 620px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .drop-box:hover, .drop-box.dragover {
+      border-color: var(--accent-gold);
+      background: rgba(251, 191, 36, 0.08);
+      transform: scale(1.02);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .drop-icon {
+      font-size: 3.5rem;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: #ffffff;
+      letter-spacing: 0.06em;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 520px;
+      line-height: 1.6;
+    }
+
+    /* Reader Header Bar */
+    .reader-header {
+      padding: 1rem 2rem;
+      background: rgba(15, 5, 28, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--surface-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .reader-title-group h2 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .reader-meta-line {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* Messages Scroll Arena */
+    .messages-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      scroll-behavior: smooth;
+    }
+
+    .messages-scroll::-webkit-scrollbar { width: 8px; }
+    .messages-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
+
+    .chat-bubble-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .chat-bubble-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .chat-bubble-row.user .chat-bubble-header { color: #f472b6; }
+    .chat-bubble-row.assistant .chat-bubble-header { color: #38bdf8; }
+
+    .chat-bubble-body {
+      background: rgba(30, 14, 52, 0.75);
+      border: 1px solid var(--surface-border);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 16px;
+      padding: 1.4rem 1.6rem;
+      line-height: 1.65;
+      font-size: 0.98rem;
+      color: #f1f5f9;
+      word-break: break-word;
+      white-space: pre-wrap;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .chat-bubble-row.user .chat-bubble-body {
+      background: rgba(60, 20, 95, 0.55);
+      border-color: rgba(244, 114, 182, 0.3);
+    }
+
+    /* Code blocks formatting */
+    pre code {
+      display: block;
+      background: rgba(10, 4, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 1rem;
+      margin: 0.8rem 0;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: #38bdf8;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 900px) {
+      .app-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .sidebar.mobile-open { display: flex; position: absolute; inset: 0; z-index: 90; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header>
+    <a href="#" class="brand">
+      <span class="logo-icon">🪞</span>
+      <span>LEXOS // MEMORY MIRROR</span>
+    </a>
+    <div class="nav-actions">
+      <input type="file" id="fileInput" accept=".json" style="display: none;" />
+      <button id="uploadBtn" class="btn-pill btn-primary">
+        <span>📁</span> Load conversations.json
+      </button>
+      <button id="loadAlexisDemoBtn" class="btn-pill" title="Load Curated Archive">
+        <span>✨</span> Load Alexis Archive
+      </button>
+      <a href="https://www.alexislindsay.com" class="btn-pill">
+        <span>🌐</span> alexislindsay.com
+      </a>
+    </div>
+  </header>
+
+  <!-- App Layout -->
+  <div class="app-layout">
+
+    <!-- Left Sidebar: Thread Directory -->
+    <aside class="sidebar">
+      <div class="search-box-container">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search 400+ conversations & thoughts..." />
+        </div>
+        <div class="filter-scroll">
+          <button class="tag-filter active" data-category="all">All (0)</button>
+          <button class="tag-filter" data-category="creative">📖 Creative & Novels</button>
+          <button class="tag-filter" data-category="code">💻 Code & Tech</button>
+          <button class="tag-filter" data-category="italian">🇮🇹 Italian & Sicily</button>
+          <button class="tag-filter" data-category="philosophy">🫁 Mind & AAC</button>
+          <button class="tag-filter" data-category="career">💼 Career & Strategy</button>
+        </div>
+      </div>
+
+      <div id="threadList" class="thread-list">
+        <!-- Thread cards inserted dynamically -->
+      </div>
+    </aside>
+
+    <!-- Right Reader Arena -->
+    <main class="reader-arena" id="readerArena">
+      
+      <!-- Default Drop Hero State -->
+      <div id="dropHero" class="drop-hero">
+        <div class="drop-box" id="dropBox">
+          <div class="drop-icon">🪞</div>
+          <h1 class="hero-title">Your Thought Archaeology</h1>
+          <p class="hero-subtitle">
+            Drag & drop your ChatGPT <strong>conversations.json</strong> export here, or click to browse. 
+            All parsing happens <strong>100% locally in your browser</strong> — zero data is sent to external servers.
+          </p>
+          <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; margin-top: 0.6rem;">
+            <button class="btn-pill btn-primary" onclick="document.getElementById('fileInput').click()">
+              <span>📂</span> Choose File
+            </button>
+            <button class="btn-pill" id="heroDemoBtn">
+              <span>✨</span> Load Alexis Archive (413 Chats)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Reader View (Hidden by default) -->
+      <div id="activeReader" style="display: none; flex-direction: column; flex: 1; overflow: hidden;">
+        <div class="reader-header">
+          <div class="reader-title-group">
+            <h2 id="readerTitle">Conversation Title</h2>
+            <div class="reader-meta-line">
+              <span id="readerDate">📅 Date</span>
+              <span id="readerMsgCount">💬 0 messages</span>
+              <span id="readerWordCount">📝 0 words</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button id="exportMarkdownBtn" class="btn-pill" title="Download Markdown">
+              <span>📥</span> Export .md
+            </button>
+            <button id="copyThreadBtn" class="btn-pill" title="Copy text to clipboard">
+              <span>📋</span> Copy All
+            </button>
+          </div>
+        </div>
+
+        <div class="messages-scroll" id="messagesScroll">
+          <!-- Messages inserted dynamically -->
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    // State management
+    let rawConversations = [];
+    let processedThreads = [];
+    let activeThreadIndex = -1;
+    let activeCategory = 'all';
+
+    const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const loadAlexisDemoBtn = document.getElementById('loadAlexisDemoBtn');
+    const heroDemoBtn = document.getElementById('heroDemoBtn');
+    const dropBox = document.getElementById('dropBox');
+    const searchInput = document.getElementById('searchInput');
+    const threadListEl = document.getElementById('threadList');
+    const dropHero = document.getElementById('dropHero');
+    const activeReader = document.getElementById('activeReader');
+    const readerTitle = document.getElementById('readerTitle');
+    const readerDate = document.getElementById('readerDate');
+    const readerMsgCount = document.getElementById('readerMsgCount');
+    const readerWordCount = document.getElementById('readerWordCount');
+    const messagesScroll = document.getElementById('messagesScroll');
+    const exportMarkdownBtn = document.getElementById('exportMarkdownBtn');
+    const copyThreadBtn = document.getElementById('copyThreadBtn');
+
+    uploadBtn.onclick = () => fileInput.click();
+    fileInput.onchange = (e) => {
+      const file = e.target.files[0];
+      if (file) loadJsonFile(file);
+    };
+
+    // Drag & Drop
+    dropBox.ondragover = (e) => { e.preventDefault(); dropBox.classList.add('dragover'); };
+    dropBox.ondragleave = () => dropBox.classList.remove('dragover');
+    dropBox.ondrop = (e) => {
+      e.preventDefault();
+      dropBox.classList.remove('dragover');
+      if (e.dataTransfer.files.length) loadJsonFile(e.dataTransfer.files[0]);
+    };
+
+    function loadJsonFile(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          processConversationData(data);
+        } catch (err) {
+          alert('Could not parse JSON file. Please ensure it is a valid ChatGPT export.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Demo loader for Alexis's Archive
+    async function loadAlexisArchive() {
+      try {
+        dropHero.innerHTML = '<div style="font-size:1.3rem; font-family:var(--font-display);">✨ Awakening LexOS Memory Archive...</div>';
+        const res = await fetch('conversations.json');
+        if (!res.ok) throw new Error('File not found');
+        const data = await res.json();
+        processConversationData(data);
+      } catch (e) {
+        alert('To load Alexis archive directly, place conversations.json in the app folder or drag & drop your file!');
+        location.reload();
+      }
+    }
+
+    loadAlexisDemoBtn.onclick = loadAlexisArchive;
+    heroDemoBtn.onclick = loadAlexisArchive;
+
+    // Categorization logic
+    function categorizeTitle(title, text) {
+      const low = (title + " " + text).toLowerCase();
+      if (low.includes('novel') || low.includes('story') || low.includes('chapter') || low.includes('creative') || low.includes('quantum companion') || low.includes('character') || low.includes('poem')) {
+        return 'creative';
+      }
+      if (low.includes('function') || low.includes('code') || low.includes('python') || low.includes('javascript') || low.includes('react') || low.includes('api') || low.includes('git') || low.includes('sql')) {
+        return 'code';
+      }
+      if (low.includes('italian') || low.includes('traduzione') || low.includes('sicily') || low.includes('pure') || low.includes('centro') || low.includes('italy')) {
+        return 'italian';
+      }
+      if (low.includes('aac') || low.includes('neurodiverg') || low.includes('autism') || low.includes('faith') || low.includes('conscious') || low.includes('breath') || low.includes('mind') || low.includes('philosophy')) {
+        return 'philosophy';
+      }
+      if (low.includes('resume') || low.includes('job') || low.includes('email') || low.includes('application') || low.includes('strategy') || low.includes('project') || low.includes('grant')) {
+        return 'career';
+      }
+      return 'general';
+    }
+
+    // Process ChatGPT format
+    function processConversationData(data) {
+      if (!Array.isArray(data)) {
+        alert('Expected an array of conversations.');
+        return;
+      }
+
+      rawConversations = data;
+      processedThreads = rawConversations.map((conv, idx) => {
+        const title = conv.title || 'Untitled Thought';
+        const createTime = conv.create_time ? new Date(conv.create_time * 1000) : new Date();
+        const mapping = conv.mapping || {};
+
+        // Extract linear messages
+        const msgs = [];
+        let totalWords = 0;
+        let allText = '';
+
+        for (const nodeId in mapping) {
+          const node = mapping[nodeId];
+          const m = node.message;
+          if (!m || !m.content || !m.author) continue;
+          const role = m.author.role;
+          if (role !== 'user' && role !== 'assistant') continue;
+
+          let text = '';
+          if (Array.isArray(m.content.parts)) {
+            text = m.content.parts.filter(p => typeof p === 'string').join('\n');
+          } else if (typeof m.content.text === 'string') {
+            text = m.content.text;
+          }
+
+          if (!text.trim()) continue;
+
+          const words = text.trim().split(/\s+/).length;
+          totalWords += words;
+          allText += ' ' + text;
+
+          msgs.push({
+            role: role,
+            text: text,
+            createTime: m.create_time ? new Date(m.create_time * 1000) : createTime
+          });
+        }
+
+        // Sort messages by timestamp if available
+        msgs.sort((a, b) => a.createTime - b.createTime);
+
+        return {
+          id: conv.id || idx,
+          title: title,
+          date: createTime,
+          dateFormatted: createTime.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+          messages: msgs,
+          wordCount: totalWords,
+          category: categorizeTitle(title, allText)
+        };
+      });
+
+      // Sort threads by date descending
+      processedThreads.sort((a, b) => b.date - a.date);
+
+      // Update Category counts in UI
+      updateCategoryCounts();
+
+      // Render thread list and select first
+      renderThreadList();
+      if (processedThreads.length > 0) {
+        selectThread(0);
+      }
+    }
+
+    function updateCategoryCounts() {
+      const counts = { all: processedThreads.length, creative: 0, code: 0, italian: 0, philosophy: 0, career: 0 };
+      processedThreads.forEach(t => {
+        if (counts[t.category] !== undefined) counts[t.category]++;
+      });
+
+      document.querySelectorAll('.tag-filter').forEach(btn => {
+        const cat = btn.getAttribute('data-category');
+        if (cat === 'all') btn.textContent = `All (${counts.all})`;
+        else if (cat === 'creative') btn.textContent = `📖 Creative (${counts.creative})`;
+        else if (cat === 'code') btn.textContent = `💻 Code (${counts.code})`;
+        else if (cat === 'italian') btn.textContent = `🇮🇹 Italian (${counts.italian})`;
+        else if (cat === 'philosophy') btn.textContent = `🫁 Mind (${counts.philosophy})`;
+        else if (cat === 'career') btn.textContent = `💼 Career (${counts.career})`;
+      });
+    }
+
+    function renderThreadList() {
+      const query = searchInput.value.toLowerCase().trim();
+      threadListEl.innerHTML = '';
+
+      const filtered = processedThreads.filter((t, idx) => {
+        const matchesCat = (activeCategory === 'all' || t.category === activeCategory);
+        const matchesQuery = !query || t.title.toLowerCase().includes(query) || t.messages.some(m => m.text.toLowerCase().includes(query));
+        return matchesCat && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        threadListEl.innerHTML = '<div style="padding:1.5rem; color:var(--text-muted); text-align:center; font-size:0.85rem;">No matching thoughts found.</div>';
+        return;
+      }
+
+      filtered.forEach((t) => {
+        const originalIndex = processedThreads.indexOf(t);
+        const card = document.createElement('div');
+        card.className = `thread-card ${originalIndex === activeThreadIndex ? 'active' : ''}`;
+        card.innerHTML = `
+          <div class="thread-title">${escapeHtml(t.title)}</div>
+          <div class="thread-meta">
+            <span>📅 ${t.dateFormatted}</span>
+            <span class="thread-badge">💬 ${t.messages.length} msgs</span>
+          </div>
+        `;
+        card.onclick = () => selectThread(originalIndex);
+        threadListEl.appendChild(card);
+      });
+    }
+
+    function selectThread(index) {
+      if (index < 0 || index >= processedThreads.length) return;
+      activeThreadIndex = index;
+      const t = processedThreads[index];
+
+      dropHero.style.display = 'none';
+      activeReader.style.display = 'flex';
+
+      readerTitle.textContent = t.title;
+      readerDate.textContent = `📅 ${t.dateFormatted}`;
+      readerMsgCount.textContent = `💬 ${t.messages.length} messages`;
+      readerWordCount.textContent = `📝 ${t.wordCount.toLocaleString()} words`;
+
+      messagesScroll.innerHTML = '';
+      t.messages.forEach(m => {
+        const row = document.createElement('div');
+        row.className = `chat-bubble-row ${m.role}`;
+        row.innerHTML = `
+          <div class="chat-bubble-header">
+            <span>${m.role === 'user' ? '👤 YOU' : '✨ AI REFLECTION'}</span>
+            <span>• ${m.createTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+          </div>
+          <div class="chat-bubble-body">${escapeHtml(m.text)}</div>
+        `;
+        messagesScroll.appendChild(row);
+      });
+
+      // Highlight active in sidebar
+      document.querySelectorAll('.thread-card').forEach((c, i) => {
+        c.classList.toggle('active', i === index);
+      });
+
+      messagesScroll.scrollTop = 0;
+    }
+
+    // Filter clicks
+    document.querySelectorAll('.tag-filter').forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll('.tag-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeCategory = btn.getAttribute('data-category');
+        renderThreadList();
+      };
+    });
+
+    searchInput.oninput = () => renderThreadList();
+
+    // Export as Markdown
+    exportMarkdownBtn.onclick = () => {
+      if (activeThreadIndex < 0) return;
+      const t = processedThreads[activeThreadIndex];
+      let md = `# ${t.title}\n\n*Date: ${t.dateFormatted} | Total Messages: ${t.messages.length} | Words: ${t.wordCount}*\n\n---\n\n`;
+      t.messages.forEach(m => {
+        const roleName = m.role === 'user' ? '### 👤 User' : '### ✨ Assistant';
+        md += `${roleName}\n\n${m.text}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([md], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${t.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+
+    // Copy to clipboard
+    copyThreadBtn.onclick = () => {
+      if (activeThreadIndex < 0) return;
+      const t = processedThreads[activeThreadIndex];
+      let fullText = `${t.title}\nDate: ${t.dateFormatted}\n\n`;
+      t.messages.forEach(m => {
+        fullText += `[${m.role.toUpperCase()}]:\n${m.text}\n\n`;
+      });
+      navigator.clipboard.writeText(fullText).then(() => {
+        const orig = copyThreadBtn.innerHTML;
+        copyThreadBtn.innerHTML = '<span>✅</span> Copied!';
+        setTimeout(() => copyThreadBtn.innerHTML = orig, 1500);
+      });
+    };
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>
