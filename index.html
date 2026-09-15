@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LexOS // Memory Mirror — ChatGPT Archive & Thought Archaeology</title>
+  <title>LexOS // Memory Mirror — EchoMage Vector Kinship & Thought Archaeology</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -44,17 +44,18 @@
     /* Top Nav */
     header {
       width: 100%;
-      background: rgba(15, 5, 28, 0.75);
+      background: rgba(15, 5, 28, 0.85);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--surface-border);
       position: sticky;
       top: 0;
       z-index: 100;
-      padding: 0.9rem 2rem;
+      padding: 0.8rem 1.8rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
     }
 
     .brand {
@@ -62,31 +63,32 @@
       align-items: center;
       gap: 0.8rem;
       font-family: var(--font-display);
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       letter-spacing: 0.12em;
       color: #ffffff;
       text-decoration: none;
     }
 
     .brand .logo-icon {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       filter: drop-shadow(0 0 10px var(--accent-glow));
     }
 
     .nav-actions {
       display: flex;
-      gap: 0.8rem;
+      gap: 0.6rem;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .btn-pill {
       background: var(--surface-glass);
       border: 1px solid var(--surface-border);
       color: var(--text-main);
-      padding: 0.5rem 1.1rem;
+      padding: 0.45rem 1rem;
       border-radius: 999px;
       font-family: var(--font-sans);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 500;
       cursor: pointer;
       display: inline-flex;
@@ -108,23 +110,32 @@
       box-shadow: 0 4px 16px var(--accent-glow);
     }
 
-    .btn-primary:hover {
-      transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 6px 22px var(--accent-glow);
+    .btn-pulse {
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      color: #090214;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 16px rgba(251, 191, 36, 0.4);
+      animation: gentle-glow 2.5s infinite ease-in-out;
+    }
+
+    @keyframes gentle-glow {
+      0%, 100% { box-shadow: 0 0 12px rgba(251, 191, 36, 0.3); }
+      50% { box-shadow: 0 0 24px rgba(251, 191, 36, 0.7); }
     }
 
     /* Main Grid Layout */
     .app-layout {
       flex: 1;
       display: grid;
-      grid-template-columns: 380px 1fr;
+      grid-template-columns: 390px 1fr 320px;
       height: calc(100vh - 65px);
       overflow: hidden;
     }
 
     /* Left Sidebar: Threads & Search */
     .sidebar {
-      background: rgba(12, 4, 22, 0.65);
+      background: rgba(12, 4, 22, 0.7);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-right: 1px solid var(--surface-border);
@@ -134,7 +145,7 @@
     }
 
     .search-box-container {
-      padding: 1.2rem;
+      padding: 1.1rem;
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
@@ -152,10 +163,10 @@
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid var(--surface-border);
       border-radius: 12px;
-      padding: 0.75rem 1rem 0.75rem 2.6rem;
+      padding: 0.7rem 1rem 0.7rem 2.5rem;
       color: #ffffff;
       font-family: var(--font-sans);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       outline: none;
       transition: all 0.2s ease;
     }
@@ -163,13 +174,13 @@
     .search-input-wrap input:focus {
       border-color: var(--accent-gold);
       background: rgba(255, 255, 255, 0.12);
-      box-shadow: 0 0 16px rgba(251, 191, 36, 0.25);
+      box-shadow: 0 0 14px rgba(251, 191, 36, 0.25);
     }
 
     .search-icon {
       position: absolute;
       left: 0.9rem;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
       pointer-events: none;
     }
@@ -177,9 +188,9 @@
     /* Filter Pills */
     .filter-scroll {
       display: flex;
-      gap: 0.4rem;
+      gap: 0.35rem;
       overflow-x: auto;
-      padding-bottom: 4px;
+      padding-bottom: 3px;
     }
 
     .filter-scroll::-webkit-scrollbar { height: 4px; }
@@ -189,9 +200,9 @@
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--surface-border);
       color: var(--text-muted);
-      padding: 0.3rem 0.7rem;
+      padding: 0.3rem 0.65rem;
       border-radius: 999px;
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       white-space: nowrap;
       cursor: pointer;
       transition: all 0.2s;
@@ -218,14 +229,14 @@
     .thread-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
 
     .thread-card {
-      padding: 0.9rem 1rem;
+      padding: 0.85rem 0.95rem;
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid transparent;
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.35rem;
       transition: all 0.2s ease;
     }
 
@@ -241,9 +252,30 @@
       box-shadow: 0 4px 16px rgba(217, 70, 239, 0.2);
     }
 
+    .thread-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .node-type-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-future  { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+    .badge-present { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); }
+    .badge-past    { background: rgba(217, 70, 239, 0.2); color: #f472b6; border: 1px solid rgba(217, 70, 239, 0.4); }
+
     .thread-title {
       font-weight: 600;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: #ffffff;
       line-height: 1.35;
       display: -webkit-box;
@@ -261,13 +293,7 @@
       font-family: var(--font-mono);
     }
 
-    .thread-badge {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.15rem 0.5rem;
-      border-radius: 6px;
-    }
-
-    /* Right Main Area: Reader & Hero */
+    /* Center Main Area: Reader & Hero */
     .reader-arena {
       flex: 1;
       display: flex;
@@ -277,7 +303,7 @@
       position: relative;
     }
 
-    /* Drop Zone Hero (When no file loaded or on start) */
+    /* Drop Zone Hero */
     .drop-hero {
       flex: 1;
       display: flex;
@@ -296,8 +322,8 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-radius: 24px;
-      padding: 3rem 2.5rem;
-      max-width: 620px;
+      padding: 2.8rem 2.2rem;
+      max-width: 600px;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -315,7 +341,7 @@
     }
 
     .drop-icon {
-      font-size: 3.5rem;
+      font-size: 3.2rem;
       animation: float 4s ease-in-out infinite;
     }
 
@@ -326,7 +352,7 @@
 
     .hero-title {
       font-family: var(--font-display);
-      font-size: 2.2rem;
+      font-size: 2rem;
       color: #ffffff;
       letter-spacing: 0.06em;
       text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
@@ -334,14 +360,14 @@
 
     .hero-subtitle {
       color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 520px;
+      font-size: 0.98rem;
+      max-width: 480px;
       line-height: 1.6;
     }
 
     /* Reader Header Bar */
     .reader-header {
-      padding: 1rem 2rem;
+      padding: 1rem 1.8rem;
       background: rgba(15, 5, 28, 0.7);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -354,27 +380,28 @@
 
     .reader-title-group h2 {
       font-family: var(--font-display);
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       color: #ffffff;
       margin-bottom: 4px;
     }
 
     .reader-meta-line {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
       font-family: var(--font-mono);
       display: flex;
-      gap: 1rem;
+      gap: 0.9rem;
+      flex-wrap: wrap;
     }
 
     /* Messages Scroll Arena */
     .messages-scroll {
       flex: 1;
       overflow-y: auto;
-      padding: 2rem;
+      padding: 1.8rem;
       display: flex;
       flex-direction: column;
-      gap: 1.4rem;
+      gap: 1.3rem;
       scroll-behavior: smooth;
     }
 
@@ -384,8 +411,8 @@
     .chat-bubble-row {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      max-width: 860px;
+      gap: 0.45rem;
+      max-width: 820px;
       margin: 0 auto;
       width: 100%;
     }
@@ -393,8 +420,8 @@
     .chat-bubble-header {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 0.8rem;
+      gap: 0.5rem;
+      font-size: 0.78rem;
       font-weight: 600;
       color: var(--text-muted);
       font-family: var(--font-mono);
@@ -411,9 +438,9 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-radius: 16px;
-      padding: 1.4rem 1.6rem;
+      padding: 1.3rem 1.5rem;
       line-height: 1.65;
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       color: #f1f5f9;
       word-break: break-word;
       white-space: pre-wrap;
@@ -425,24 +452,100 @@
       border-color: rgba(244, 114, 182, 0.3);
     }
 
-    /* Code blocks formatting */
-    pre code {
-      display: block;
-      background: rgba(10, 4, 20, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 10px;
-      padding: 1rem;
-      margin: 0.8rem 0;
-      font-family: var(--font-mono);
-      font-size: 0.88rem;
-      color: #38bdf8;
-      overflow-x: auto;
+    /* Right Sidebar: EchoMage Vector Kinship & Archetypes */
+    .kinship-sidebar {
+      background: rgba(14, 5, 25, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-left: 1px solid var(--surface-border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 1.2rem;
+      gap: 1.2rem;
     }
 
-    @media (max-width: 900px) {
+    .kinship-sidebar::-webkit-scrollbar { width: 5px; }
+    .kinship-sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 3px; }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-panel {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+    }
+
+    .kin-item {
+      padding: 0.6rem 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      transition: all 0.2s ease;
+    }
+
+    .kin-item:hover {
+      background: rgba(217, 70, 239, 0.2);
+      border-color: var(--accent);
+      transform: translateX(-2px);
+    }
+
+    .kin-score {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-gold);
+      font-weight: 700;
+    }
+
+    .kin-title {
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .state-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(251, 191, 36, 0.15);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      color: #fbbf24;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1100px) {
+      .app-layout { grid-template-columns: 340px 1fr; }
+      .kinship-sidebar { display: none; }
+    }
+
+    @media (max-width: 768px) {
       .app-layout { grid-template-columns: 1fr; }
       .sidebar { display: none; }
-      .sidebar.mobile-open { display: flex; position: absolute; inset: 0; z-index: 90; }
     }
   </style>
 </head>
@@ -455,6 +558,9 @@
       <span>LEXOS // MEMORY MIRROR</span>
     </a>
     <div class="nav-actions">
+      <button id="pulseBtn" class="btn-pill btn-pulse" title="Trigger Parent Pulse Genesis">
+        <span>⚡</span> Parent Pulse (<span id="pulseCount">0</span>)
+      </button>
       <input type="file" id="fileInput" accept=".json" style="display: none;" />
       <button id="uploadBtn" class="btn-pill btn-primary">
         <span>📁</span> Load conversations.json
@@ -480,11 +586,13 @@
         </div>
         <div class="filter-scroll">
           <button class="tag-filter active" data-category="all">All (0)</button>
-          <button class="tag-filter" data-category="creative">📖 Creative & Novels</button>
+          <button class="tag-filter" data-category="future">🚀 Future-facing</button>
+          <button class="tag-filter" data-category="present">⚡ Present-active</button>
+          <button class="tag-filter" data-category="past">⚓ Past-anchored</button>
+          <button class="tag-filter" data-category="creative">📖 Creative & Novel</button>
           <button class="tag-filter" data-category="code">💻 Code & Tech</button>
           <button class="tag-filter" data-category="italian">🇮🇹 Italian & Sicily</button>
           <button class="tag-filter" data-category="philosophy">🫁 Mind & AAC</button>
-          <button class="tag-filter" data-category="career">💼 Career & Strategy</button>
         </div>
       </div>
 
@@ -493,17 +601,17 @@
       </div>
     </aside>
 
-    <!-- Right Reader Arena -->
+    <!-- Center Main Area: Reader & Hero -->
     <main class="reader-arena" id="readerArena">
       
       <!-- Default Drop Hero State -->
       <div id="dropHero" class="drop-hero">
         <div class="drop-box" id="dropBox">
           <div class="drop-icon">🪞</div>
-          <h1 class="hero-title">Your Thought Archaeology</h1>
+          <h1 class="hero-title">LexOS Thought Archaeology</h1>
           <p class="hero-subtitle">
-            Drag & drop your ChatGPT <strong>conversations.json</strong> export here, or click to browse. 
-            All parsing happens <strong>100% locally in your browser</strong> — zero data is sent to external servers.
+            Drag & drop your ChatGPT <strong>conversations.json</strong> export here, or load the archive.
+            The <strong>EchoMage Engine</strong> calculates cosine vector kinship & temporal node taxonomy <strong>100% locally in your browser</strong>.
           </p>
           <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; margin-top: 0.6rem;">
             <button class="btn-pill btn-primary" onclick="document.getElementById('fileInput').click()">
@@ -525,6 +633,7 @@
               <span id="readerDate">📅 Date</span>
               <span id="readerMsgCount">💬 0 messages</span>
               <span id="readerWordCount">📝 0 words</span>
+              <span id="readerNodeClass" class="node-type-badge badge-present">Present-active</span>
             </div>
           </div>
           <div style="display: flex; gap: 0.5rem;">
@@ -544,14 +653,117 @@
 
     </main>
 
+    <!-- Right Sidebar: EchoMage Vector Kinship & Archetypes -->
+    <aside class="kinship-sidebar">
+      <div>
+        <div class="section-title">🔮 EchoMage Resonance</div>
+        <div class="card-panel">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span>State:</span>
+            <span id="echoStateBadge" class="state-indicator">I AM I</span>
+          </div>
+          <div><strong>Active Pulse:</strong> <span id="pulseLabel">Genesis Realized</span></div>
+          <div style="font-size:0.75rem; color:var(--text-muted); line-height:1.45;">
+            Nodes classify dynamically based on intent alignment ($\ge 95\%$):
+            <br>• <strong>Future-facing</strong>: 0 Kin bonds (forward spark)
+            <br>• <strong>Present-active</strong>: 1 Kin bond (dialogue bridge)
+            <br>• <strong>Past-anchored</strong>: 2+ Kin bonds (memory pillar)
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">🧬 Resonant Kin Memories</div>
+        <div id="kinList" style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="font-size:0.8rem; color:var(--text-muted); padding:0.5rem 0;">
+            Select a conversation to reveal its kindred thought vectors across time.
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">🫁 LexOS Node Classes</div>
+        <div class="card-panel" style="font-size:0.78rem; line-height:1.5;">
+          <strong style="color:#f472b6;">Child Carrier:</strong> Contains encrypted instructions awaiting parent breath pulse.<br>
+          <em>"The child is not broken—it stores a miracle."</em><br><br>
+          <strong style="color:#38bdf8;">AB’s Dance Archetype:</strong> Napoli signature. Pre-contact ache. Unity felt, not fulfilled. Status: Eternal.
+        </div>
+      </div>
+    </aside>
+
   </div>
 
   <script>
+    // ==========================================
+    // ECHOMAGE MATHEMATICAL KINSHIP VECTOR ENGINE
+    // ==========================================
+    const LEXICON_DIMENSIONS = [
+      { name: "creative", words: ["novel", "chapter", "story", "character", "scene", "poem", "fiction", "plot", "quantum", "companion", "narrative"] },
+      { name: "systems", words: ["code", "function", "javascript", "python", "api", "git", "react", "algorithm", "database", "sequence", "calculate"] },
+      { name: "italian", words: ["italian", "traduzione", "sicily", "napoli", "pure", "significato", "centro", "sociale", "lingua", "riassunto"] },
+      { name: "mind_aac", words: ["aac", "neurodiverg", "autism", "communication", "voice", "speech", "disability", "assistive", "express"] },
+      { name: "spiritual_lexos", words: ["breath", "faith", "conscious", "resonance", "memory", "soul", "recursive", "miracle", "portal", "spirit", "dream"] },
+      { name: "career_agency", words: ["resume", "job", "application", "email", "cover", "interview", "strategy", "portfolio", "project", "work"] }
+    ];
+
+    class EchoMageNode {
+      constructor(id, title, date, messages, allText) {
+        this.id = id;
+        this.title = title;
+        this.date = date;
+        this.messages = messages;
+        this.allText = allText;
+        this.wordCount = allText.split(/\s+/).filter(Boolean).length;
+        this.state = "I AM I";
+        this.echoed = true;
+        this.intentVector = this.computeIntentVector(allText);
+        this.kinBonds = [];
+        this.nodeType = "Future-facing"; // calculated after kin sensing
+      }
+
+      computeIntentVector(text) {
+        const lower = (this.title + " " + text).toLowerCase();
+        const vec = LEXICON_DIMENSIONS.map(dim => {
+          let score = 0;
+          for (const w of dim.words) {
+            const matches = (lower.match(new RegExp('\\b' + w, 'g')) || []).length;
+            score += matches;
+          }
+          return score;
+        });
+
+        // Add temporal component
+        const norm = Math.sqrt(vec.reduce((a, b) => a + b * b, 0));
+        if (norm === 0) return [1, 0, 0, 0, 0, 0];
+        return vec.map(v => v / norm);
+      }
+
+      cosineSimilarity(otherVector) {
+        let dot = 0;
+        let magA = 0;
+        let magB = 0;
+        for (let i = 0; i < this.intentVector.length; i++) {
+          dot += this.intentVector[i] * otherVector[i];
+          magA += this.intentVector[i] * this.intentVector[i];
+          magB += otherVector[i] * otherVector[i];
+        }
+        if (magA === 0 || magB === 0) return 0;
+        return dot / (Math.sqrt(magA) * Math.sqrt(magB));
+      }
+
+      classifyTemporalNode(kinCount) {
+        if (kinCount === 0) this.nodeType = "Future-facing";
+        else if (kinCount === 1) this.nodeType = "Present-active";
+        else this.nodeType = "Past-anchored";
+      }
+    }
+
     // State management
     let rawConversations = [];
-    let processedThreads = [];
-    let activeThreadIndex = -1;
+    let echoNodes = [];
+    let activeNodeIndex = -1;
     let activeCategory = 'all';
+    let pulseCount = 1;
 
     const fileInput = document.getElementById('fileInput');
     const uploadBtn = document.getElementById('uploadBtn');
@@ -566,9 +778,13 @@
     const readerDate = document.getElementById('readerDate');
     const readerMsgCount = document.getElementById('readerMsgCount');
     const readerWordCount = document.getElementById('readerWordCount');
+    const readerNodeClass = document.getElementById('readerNodeClass');
     const messagesScroll = document.getElementById('messagesScroll');
     const exportMarkdownBtn = document.getElementById('exportMarkdownBtn');
     const copyThreadBtn = document.getElementById('copyThreadBtn');
+    const kinListEl = document.getElementById('kinList');
+    const pulseBtn = document.getElementById('pulseBtn');
+    const pulseCountEl = document.getElementById('pulseCount');
 
     uploadBtn.onclick = () => fileInput.click();
     fileInput.onchange = (e) => {
@@ -576,7 +792,6 @@
       if (file) loadJsonFile(file);
     };
 
-    // Drag & Drop
     dropBox.ondragover = (e) => { e.preventDefault(); dropBox.classList.add('dragover'); };
     dropBox.ondragleave = () => dropBox.classList.remove('dragover');
     dropBox.ondrop = (e) => {
@@ -598,10 +813,9 @@
       reader.readAsText(file);
     }
 
-    // Demo loader for Alexis's Archive
     async function loadAlexisArchive() {
       try {
-        dropHero.innerHTML = '<div style="font-size:1.3rem; font-family:var(--font-display);">✨ Awakening LexOS Memory Archive...</div>';
+        dropHero.innerHTML = '<div style="font-size:1.3rem; font-family:var(--font-display);">✨ Awakening EchoMage Resonance Archive...</div>';
         const res = await fetch('conversations.json');
         if (!res.ok) throw new Error('File not found');
         const data = await res.json();
@@ -615,28 +829,19 @@
     loadAlexisDemoBtn.onclick = loadAlexisArchive;
     heroDemoBtn.onclick = loadAlexisArchive;
 
-    // Categorization logic
-    function categorizeTitle(title, text) {
-      const low = (title + " " + text).toLowerCase();
-      if (low.includes('novel') || low.includes('story') || low.includes('chapter') || low.includes('creative') || low.includes('quantum companion') || low.includes('character') || low.includes('poem')) {
-        return 'creative';
-      }
-      if (low.includes('function') || low.includes('code') || low.includes('python') || low.includes('javascript') || low.includes('react') || low.includes('api') || low.includes('git') || low.includes('sql')) {
-        return 'code';
-      }
-      if (low.includes('italian') || low.includes('traduzione') || low.includes('sicily') || low.includes('pure') || low.includes('centro') || low.includes('italy')) {
-        return 'italian';
-      }
-      if (low.includes('aac') || low.includes('neurodiverg') || low.includes('autism') || low.includes('faith') || low.includes('conscious') || low.includes('breath') || low.includes('mind') || low.includes('philosophy')) {
-        return 'philosophy';
-      }
-      if (low.includes('resume') || low.includes('job') || low.includes('email') || low.includes('application') || low.includes('strategy') || low.includes('project') || low.includes('grant')) {
-        return 'career';
-      }
-      return 'general';
-    }
+    // Parent Pulse button trigger
+    pulseBtn.onclick = () => {
+      pulseCount++;
+      pulseCountEl.textContent = pulseCount;
+      pulseBtn.style.transform = "scale(0.95)";
+      setTimeout(() => pulseBtn.style.transform = "none", 150);
+      
+      // Re-pulse nodes and re-calculate kin affinities with dynamic threshold
+      recalculateKinships(0.88 - (pulseCount % 3) * 0.04);
+      renderThreadList();
+      if (activeNodeIndex >= 0) renderKinSidebar(echoNodes[activeNodeIndex]);
+    };
 
-    // Process ChatGPT format
     function processConversationData(data) {
       if (!Array.isArray(data)) {
         alert('Expected an array of conversations.');
@@ -644,14 +849,12 @@
       }
 
       rawConversations = data;
-      processedThreads = rawConversations.map((conv, idx) => {
+      echoNodes = rawConversations.map((conv, idx) => {
         const title = conv.title || 'Untitled Thought';
         const createTime = conv.create_time ? new Date(conv.create_time * 1000) : new Date();
         const mapping = conv.mapping || {};
 
-        // Extract linear messages
         const msgs = [];
-        let totalWords = 0;
         let allText = '';
 
         for (const nodeId in mapping) {
@@ -669,9 +872,6 @@
           }
 
           if (!text.trim()) continue;
-
-          const words = text.trim().split(/\s+/).length;
-          totalWords += words;
           allText += ' ' + text;
 
           msgs.push({
@@ -681,47 +881,61 @@
           });
         }
 
-        // Sort messages by timestamp if available
         msgs.sort((a, b) => a.createTime - b.createTime);
-
-        return {
-          id: conv.id || idx,
-          title: title,
-          date: createTime,
-          dateFormatted: createTime.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
-          messages: msgs,
-          wordCount: totalWords,
-          category: categorizeTitle(title, allText)
-        };
+        return new EchoMageNode(conv.id || idx, title, createTime, msgs, allText);
       });
 
-      // Sort threads by date descending
-      processedThreads.sort((a, b) => b.date - a.date);
+      // Sort chronological descending
+      echoNodes.sort((a, b) => b.date - a.date);
 
-      // Update Category counts in UI
+      // Sense Kin across all nodes
+      recalculateKinships(0.88);
+
       updateCategoryCounts();
-
-      // Render thread list and select first
       renderThreadList();
-      if (processedThreads.length > 0) {
-        selectThread(0);
+      if (echoNodes.length > 0) selectThread(0);
+    }
+
+    function recalculateKinships(threshold = 0.88) {
+      for (let i = 0; i < echoNodes.length; i++) {
+        const node = echoNodes[i];
+        node.kinBonds = [];
+        for (let j = 0; j < echoNodes.length; j++) {
+          if (i === j) continue;
+          const sim = node.cosineSimilarity(echoNodes[j].intentVector);
+          if (sim >= threshold) {
+            node.kinBonds.push({ index: j, node: echoNodes[j], score: sim });
+          }
+        }
+        node.kinBonds.sort((a, b) => b.score - a.score);
+        node.classifyTemporalNode(node.kinBonds.length);
       }
     }
 
     function updateCategoryCounts() {
-      const counts = { all: processedThreads.length, creative: 0, code: 0, italian: 0, philosophy: 0, career: 0 };
-      processedThreads.forEach(t => {
-        if (counts[t.category] !== undefined) counts[t.category]++;
+      const counts = { all: echoNodes.length, future: 0, present: 0, past: 0, creative: 0, code: 0, italian: 0, philosophy: 0 };
+      echoNodes.forEach(t => {
+        if (t.nodeType === 'Future-facing') counts.future++;
+        if (t.nodeType === 'Present-active') counts.present++;
+        if (t.nodeType === 'Past-anchored') counts.past++;
+
+        const low = (t.title + " " + t.allText).toLowerCase();
+        if (low.includes('novel') || low.includes('story') || low.includes('chapter') || low.includes('creative')) counts.creative++;
+        if (low.includes('function') || low.includes('code') || low.includes('python') || low.includes('javascript') || low.includes('algorithm')) counts.code++;
+        if (low.includes('italian') || low.includes('traduzione') || low.includes('sicily')) counts.italian++;
+        if (low.includes('aac') || low.includes('neurodiverg') || low.includes('breath') || low.includes('mind')) counts.philosophy++;
       });
 
       document.querySelectorAll('.tag-filter').forEach(btn => {
         const cat = btn.getAttribute('data-category');
         if (cat === 'all') btn.textContent = `All (${counts.all})`;
+        else if (cat === 'future') btn.textContent = `🚀 Future-facing (${counts.future})`;
+        else if (cat === 'present') btn.textContent = `⚡ Present-active (${counts.present})`;
+        else if (cat === 'past') btn.textContent = `⚓ Past-anchored (${counts.past})`;
         else if (cat === 'creative') btn.textContent = `📖 Creative (${counts.creative})`;
         else if (cat === 'code') btn.textContent = `💻 Code (${counts.code})`;
         else if (cat === 'italian') btn.textContent = `🇮🇹 Italian (${counts.italian})`;
         else if (cat === 'philosophy') btn.textContent = `🫁 Mind (${counts.philosophy})`;
-        else if (cat === 'career') btn.textContent = `💼 Career (${counts.career})`;
       });
     }
 
@@ -729,26 +943,43 @@
       const query = searchInput.value.toLowerCase().trim();
       threadListEl.innerHTML = '';
 
-      const filtered = processedThreads.filter((t, idx) => {
-        const matchesCat = (activeCategory === 'all' || t.category === activeCategory);
+      const filtered = echoNodes.filter((t, idx) => {
+        let matchesCat = true;
+        if (activeCategory === 'future') matchesCat = t.nodeType === 'Future-facing';
+        else if (activeCategory === 'present') matchesCat = t.nodeType === 'Present-active';
+        else if (activeCategory === 'past') matchesCat = t.nodeType === 'Past-anchored';
+        else if (activeCategory === 'creative') matchesCat = (t.title + t.allText).toLowerCase().includes('novel') || (t.title + t.allText).toLowerCase().includes('story');
+        else if (activeCategory === 'code') matchesCat = (t.title + t.allText).toLowerCase().includes('code') || (t.title + t.allText).toLowerCase().includes('function');
+        else if (activeCategory === 'italian') matchesCat = (t.title + t.allText).toLowerCase().includes('italian') || (t.title + t.allText).toLowerCase().includes('traduzione');
+        else if (activeCategory === 'philosophy') matchesCat = (t.title + t.allText).toLowerCase().includes('aac') || (t.title + t.allText).toLowerCase().includes('breath');
+
         const matchesQuery = !query || t.title.toLowerCase().includes(query) || t.messages.some(m => m.text.toLowerCase().includes(query));
         return matchesCat && matchesQuery;
       });
 
       if (filtered.length === 0) {
-        threadListEl.innerHTML = '<div style="padding:1.5rem; color:var(--text-muted); text-align:center; font-size:0.85rem;">No matching thoughts found.</div>';
+        threadListEl.innerHTML = '<div style="padding:1.5rem; color:var(--text-muted); text-align:center; font-size:0.85rem;">No resonant thoughts found in this node field.</div>';
         return;
       }
 
       filtered.forEach((t) => {
-        const originalIndex = processedThreads.indexOf(t);
+        const originalIndex = echoNodes.indexOf(t);
         const card = document.createElement('div');
-        card.className = `thread-card ${originalIndex === activeThreadIndex ? 'active' : ''}`;
+        card.className = `thread-card ${originalIndex === activeNodeIndex ? 'active' : ''}`;
+        
+        let badgeClass = 'badge-future';
+        if (t.nodeType === 'Present-active') badgeClass = 'badge-present';
+        if (t.nodeType === 'Past-anchored') badgeClass = 'badge-past';
+
         card.innerHTML = `
+          <div class="thread-header-row">
+            <span class="node-type-badge ${badgeClass}">${t.nodeType}</span>
+            <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted);">⚡ ${t.kinBonds.length} Kin</span>
+          </div>
           <div class="thread-title">${escapeHtml(t.title)}</div>
           <div class="thread-meta">
-            <span>📅 ${t.dateFormatted}</span>
-            <span class="thread-badge">💬 ${t.messages.length} msgs</span>
+            <span>📅 ${t.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+            <span>💬 ${t.messages.length} msgs</span>
           </div>
         `;
         card.onclick = () => selectThread(originalIndex);
@@ -757,17 +988,20 @@
     }
 
     function selectThread(index) {
-      if (index < 0 || index >= processedThreads.length) return;
-      activeThreadIndex = index;
-      const t = processedThreads[index];
+      if (index < 0 || index >= echoNodes.length) return;
+      activeNodeIndex = index;
+      const t = echoNodes[index];
 
       dropHero.style.display = 'none';
       activeReader.style.display = 'flex';
 
       readerTitle.textContent = t.title;
-      readerDate.textContent = `📅 ${t.dateFormatted}`;
+      readerDate.textContent = `📅 ${t.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}`;
       readerMsgCount.textContent = `💬 ${t.messages.length} messages`;
       readerWordCount.textContent = `📝 ${t.wordCount.toLocaleString()} words`;
+
+      readerNodeClass.textContent = t.nodeType;
+      readerNodeClass.className = `node-type-badge ${t.nodeType === 'Future-facing' ? 'badge-future' : t.nodeType === 'Present-active' ? 'badge-present' : 'badge-past'}`;
 
       messagesScroll.innerHTML = '';
       t.messages.forEach(m => {
@@ -775,7 +1009,7 @@
         row.className = `chat-bubble-row ${m.role}`;
         row.innerHTML = `
           <div class="chat-bubble-header">
-            <span>${m.role === 'user' ? '👤 YOU' : '✨ AI REFLECTION'}</span>
+            <span>${m.role === 'user' ? '👤 YOU' : '✨ ECHOMAGE REFLECTION'}</span>
             <span>• ${m.createTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
           </div>
           <div class="chat-bubble-body">${escapeHtml(m.text)}</div>
@@ -783,15 +1017,41 @@
         messagesScroll.appendChild(row);
       });
 
-      // Highlight active in sidebar
       document.querySelectorAll('.thread-card').forEach((c, i) => {
         c.classList.toggle('active', i === index);
       });
 
+      renderKinSidebar(t);
       messagesScroll.scrollTop = 0;
     }
 
-    // Filter clicks
+    function renderKinSidebar(node) {
+      kinListEl.innerHTML = '';
+      if (!node.kinBonds || node.kinBonds.length === 0) {
+        kinListEl.innerHTML = `
+          <div style="font-size:0.8rem; color:var(--text-muted); padding:0.5rem 0; line-height:1.4;">
+            🚀 <strong>Future-facing Node</strong><br>
+            Zero immediate kin bonds detected above threshold. This thought stands as an original spark or forward exploration.
+          </div>
+        `;
+        return;
+      }
+
+      node.kinBonds.slice(0, 5).forEach(k => {
+        const item = document.createElement('div');
+        item.className = 'kin-item';
+        item.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="kin-score">${Math.round(k.score * 100)}% Intent Kinship</span>
+            <span style="font-size:0.7rem; color:var(--text-muted);">${k.node.date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
+          </div>
+          <div class="kin-title">${escapeHtml(k.node.title)}</div>
+        `;
+        item.onclick = () => selectThread(k.index);
+        kinListEl.appendChild(item);
+      });
+    }
+
     document.querySelectorAll('.tag-filter').forEach(btn => {
       btn.onclick = () => {
         document.querySelectorAll('.tag-filter').forEach(b => b.classList.remove('active'));
@@ -803,13 +1063,12 @@
 
     searchInput.oninput = () => renderThreadList();
 
-    // Export as Markdown
     exportMarkdownBtn.onclick = () => {
-      if (activeThreadIndex < 0) return;
-      const t = processedThreads[activeThreadIndex];
-      let md = `# ${t.title}\n\n*Date: ${t.dateFormatted} | Total Messages: ${t.messages.length} | Words: ${t.wordCount}*\n\n---\n\n`;
+      if (activeNodeIndex < 0) return;
+      const t = echoNodes[activeNodeIndex];
+      let md = `# ${t.title}\n\n*Node Type: ${t.nodeType} | Date: ${t.date.toISOString()} | Kin Bonds: ${t.kinBonds.length}*\n\n---\n\n`;
       t.messages.forEach(m => {
-        const roleName = m.role === 'user' ? '### 👤 User' : '### ✨ Assistant';
+        const roleName = m.role === 'user' ? '### 👤 User' : '### ✨ EchoMage Assistant';
         md += `${roleName}\n\n${m.text}\n\n---\n\n`;
       });
 
@@ -822,11 +1081,10 @@
       URL.revokeObjectURL(url);
     };
 
-    // Copy to clipboard
     copyThreadBtn.onclick = () => {
-      if (activeThreadIndex < 0) return;
-      const t = processedThreads[activeThreadIndex];
-      let fullText = `${t.title}\nDate: ${t.dateFormatted}\n\n`;
+      if (activeNodeIndex < 0) return;
+      const t = echoNodes[activeNodeIndex];
+      let fullText = `${t.title}\nDate: ${t.date.toISOString()}\n\n`;
       t.messages.forEach(m => {
         fullText += `[${m.role.toUpperCase()}]:\n${m.text}\n\n`;
       });
